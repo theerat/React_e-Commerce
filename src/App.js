@@ -1,26 +1,43 @@
-import React from 'react';
+import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import AppBar from './components/AppBar'
+import ProductList from './components/ProductList'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { Grommet, Box, TextInput } from 'grommet';
+
+class App extends Component {
+
+  state = {
+    query: ''
+  }
+
+  onSearchChange = (event) => {
+    this.setState({ "search": event.target.value });
+  }
+  render() {
+    return (
+      <div className="App">
+        <Box direction="column" fill>
+          <AppBar />
+          <Box direction="row" pad="medium" fill >
+            <Box width="medium">
+              <Box direction="row" basis="medium" pad="small">
+                <TextInput
+                  placeholder="Search here"
+                  value={this.state.query}
+                  onChange={(e) => this.setState({ query: e.target.value })}
+                />
+              </Box>
+            </Box>
+            <Box flex>
+              <ProductList search={this.state.query} />
+            </Box>
+          </Box>
+        </Box>
+      </div>
+    );
+  }
 }
 
 export default App;
